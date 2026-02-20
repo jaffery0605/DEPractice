@@ -1,0 +1,9 @@
+SELECT t.customerID 
+FROM transactions t
+WHERE NOT EXISTS (
+    SELECT 1 
+    From transactions lm
+    WHERE t.customerID = lm.customerID
+    lm.date >= DATEADD(month, DATEDIFF(month,0, GETDATE()-1) 0) AND
+    lm.date < DATEADD(month, DATEDIFF(month,0, GETDATE()) 0)
+)
