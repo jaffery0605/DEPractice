@@ -1,0 +1,19 @@
+from pyspark.sql.functions import col, current_date, add_months, trunc
+
+curr_month = trunc(current_date(), "month")
+prev_month = add_months(curr_month, -1)
+
+df_last_month = (
+    df.select("customerID")
+    .filter(
+        (col("date") >= prev_month) &
+        (col("date") < curr_month)
+    )
+    .distinct()
+)
+
+df_result = (
+    df.select("customerID")
+      .distinct()
+      .join(df_last_month, "customerID", "left_anti")
+)

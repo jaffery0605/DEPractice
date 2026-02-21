@@ -1,0 +1,5 @@
+SELECT customerID, SUM(saleAmount) AS total_sales
+FROM transactions
+GROUP BY customerID
+ORDER BY total_sales DESC, customerID ASC
+LIMIT 3;
