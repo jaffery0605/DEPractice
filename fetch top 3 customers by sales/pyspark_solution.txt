@@ -1,7 +1,7 @@
-df.select("customerID")
+df.select("customerID", "saleAmount")
 .groupBy("customerID")
 .agg(
-    sum(col(df.saleAmount)).alias("total_sales")
+    sum(col("saleAmount")).alias("total_sales")
 )
-.orderBy(df.total_sales.desc(),df.customerID.asc())
+.orderBy(col("total_sales").desc(),col("customerID").asc())
 .limit(3)
