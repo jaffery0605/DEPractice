@@ -1,0 +1,2 @@
+df_p.join(df_a, "personId", "left")
+.select("firstName", "lastName", "city", "state")
