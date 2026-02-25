@@ -1,0 +1,14 @@
+result_df = (
+    person_df.alias("t")
+    .join(
+        address_df.alias("a"),
+        F.col("t.personId") == F.col("a.personId"),
+        "left"
+    )
+    .select(
+        "t.firstname",
+        "t.lastname",
+        "a.city",
+        "a.state"
+    )
+)
