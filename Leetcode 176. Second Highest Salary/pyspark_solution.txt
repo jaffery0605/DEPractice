@@ -1,0 +1,21 @@
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+# Define window
+window_spec = Window.orderBy(F.col("salary").desc())
+
+# Apply dense_rank
+cte_df = (
+    employee_df
+    .withColumn("rn", F.dense_rank().over(window_spec))
+)
+
+# Get second highest salary
+result_df = (
+    cte_df
+    .select(
+        F.max(F.when(F.col("rn") == 2, F.col("salary"))).alias("SecondHighestSalary")
+    )
+)
+
+result_df.show()
